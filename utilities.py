@@ -91,7 +91,7 @@ def view_data_segments(xs, ys, plot):
 
         # Plot lines if specified
         if plot:
-            xmin, xmax = xs.min(), xs.max()
+            xmin, xmax = xs[i].min(), xs[i].max()
             ymin, ymax = a + b * xmin, a + b * xmax
 
             plt.plot([xmin, xmax], [ymin, ymax], 'r-')
@@ -138,4 +138,4 @@ def total_residual(list_a, list_b, list_xs, list_ys):
 
 
 # %% Run main
-main("basic_2.csv", False)
+main("basic_3.csv", True)
