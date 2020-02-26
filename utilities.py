@@ -6,14 +6,16 @@ from matplotlib import pyplot as plt
 
 
 # %% Define functions
-def main(f=None):
+def main(f=None, plot=None):
     """
     Main function run when executing file
     :param f: Filename of data file. If none inputted, assume
               input comes from 2nd arg when executed.
+    :param plot: Boolean value to indicate if we should show
+                 plotted lines
     :return: None
     """
-    f_p, plot = get_file_and_plot(f)
+    f_p = get_file(f)
     if f_p is None:
         sys.exit(0)
 
@@ -21,7 +23,7 @@ def main(f=None):
     view_data_segments(xs, ys, plot)
 
 
-def get_file_and_plot(f):
+def get_file(f):
     """
     Checks if file specified when running in Python Console or
     when compiled
@@ -30,22 +32,22 @@ def get_file_and_plot(f):
     :return: Path to file or None
     """
     if f:  # Check if file specified when calling main func
-        return "train_data/{}".format(f), True
+        return "train_data/{}".format(f)
 
     elif len(sys.argv) > 1:  # Check if file specified from user input
         if sys.argv[1] == "--mode=client":  # Check if run from Python Console
             print("ERROR: Please specify the file to get data from")
-            return None, None
+            return None
 
         elif len(sys.argv) > 2:  # Check if user wants data plotted
             if sys.argv[2] == "--plot":
-                return "train_data/{}".format(sys.argv[1]), True
+                return "train_data/{}".format(sys.argv[1])
 
-        return "train_data/{}".format(sys.argv[1]), None
+        return "train_data/{}".format(sys.argv[1])
 
     else:  # Check if filename unspecified anywhere
         print("ERROR: Please specify the file to get data from")
-        return None, None
+        return None
 
 
 def load_points_from_file(filename):
@@ -76,16 +78,28 @@ def view_data_segments(xs, ys, plot):
     plt.set_cmap('Dark2')
     plt.scatter(xs, ys, c=colour)
 
+    # Convert ndarray into list of ndarrays of 20 x-values
+    xs = np.split(xs, len(xs) / 20)
+    ys = np.split(ys, len(ys) / 20)
+
     # Get constants/coefficients and total residual error
-    a, b = least_squares(xs, ys)
-    print('RSS = {}'.format(total_residual(a, b, xs, ys)))
+    list_a, list_b = [], []
+    for i, x in enumerate(xs):
+        a, b = least_squares(x, ys[i])
+        list_a.append(a)
+        list_b.append(b)
 
-    # Plot line if specified
+        # Plot lines if specified
+        if plot:
+            xmin, xmax = xs.min(), xs.max()
+            ymin, ymax = a + b * xmin, a + b * xmax
+
+            plt.plot([xmin, xmax], [ymin, ymax], 'r-')
+
+    print('RSS = {}'.format(total_residual(list_a, list_b, xs, ys)))
+
+    # Show plotted line(s) if specified
     if plot:
-        xmin, xmax = xs.min(), xs.max()
-        ymin, ymax = a + b * xmin, a + b * xmax
-
-        plt.plot([xmin, xmax], [ymin, ymax], 'r-')
         plt.show()
 
 
@@ -98,14 +112,14 @@ def least_squares(xs, ys):
     :param ys: ndarray of y values
     :return: Matrix form A = [a, b]
     """
-    # Extend the first column with 1s
-    ones = np.ones(xs.shape)
+    ones = np.ones(xs.shape)  # Extend the first column with 1s
     x_e = np.column_stack((ones, xs))
     v = np.linalg.inv(x_e.T.dot(x_e)).dot(x_e.T).dot(ys)
+
     return v
 
 
-def total_residual(a, b, xs, ys):
+def total_residual(list_a, list_b, list_xs, list_ys):
     """
     Calculate residual sum of squares
 
@@ -115,9 +129,13 @@ def total_residual(a, b, xs, ys):
     :param ys: ndarray of y values
     :return: Total residual error (int)
     """
-    y_hat = a + b * xs
-    return np.sum((ys - y_hat) ** 2)
+    sum = 0
+    for i, a in enumerate(list_a):
+        # ∑_𝑖 (𝑦̂_𝑖 − 𝑦_𝑖)^2 where 𝑦̂_𝑖 = 𝑎 + 𝑏*𝑥_𝑖
+        sum += np.sum((list_ys[i] - (a + list_b[i] * list_xs[i])) ** 2)
+
+    return sum
 
 
 # %% Run main
-main("basic_1.csv")
+main("basic_2.csv", False)
