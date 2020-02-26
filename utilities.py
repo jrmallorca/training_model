@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-# %% Define functions
+# %% Define main
 def main(f=None, plot=None):
     """
     Main function run when executing file
@@ -23,6 +23,7 @@ def main(f=None, plot=None):
     view_data_segments(xs, ys, plot)
 
 
+# %% Define get file
 def get_file(f):
     """
     Checks if file specified when running in Python Console or
@@ -50,6 +51,7 @@ def get_file(f):
         return None
 
 
+# %% Define loading points from file
 def load_points_from_file(filename):
     """Loads 2d points from a csv called filename
     Args:
@@ -61,6 +63,7 @@ def load_points_from_file(filename):
     return points[0].values, points[1].values
 
 
+# %% Define viewing data
 def view_data_segments(xs, ys, plot):
     """Visualises the input file with each segment plotted in a different colour.
     Args:
@@ -70,6 +73,7 @@ def view_data_segments(xs, ys, plot):
     Returns:
         None
     """
+    # Preparation
     assert len(xs) == len(ys)
     assert len(xs) % 20 == 0
     len_data = len(xs)
@@ -82,60 +86,85 @@ def view_data_segments(xs, ys, plot):
     xs = np.split(xs, len(xs) / 20)
     ys = np.split(ys, len(ys) / 20)
 
-    # Get constants/coefficients and total residual error
-    list_a, list_b = [], []
+    # Get constants/coefficients and residuals
+    sum_res = 0
     for i, x in enumerate(xs):
-        a, b = least_squares(x, ys[i])
-        list_a.append(a)
-        list_b.append(b)
+        cs, res = least_squares(x, ys[i])
+
+        sum_res += res
 
         # Plot lines if specified
         if plot:
-            xmin, xmax = xs[i].min(), xs[i].max()
-            ymin, ymax = a + b * xmin, a + b * xmax
+            x_min, x_max = xs[i].min(), xs[i].max()
 
-            plt.plot([xmin, xmax], [ymin, ymax], 'r-')
+            y_min, y_max = 0, 0
+            for i in range(len(cs)):
+                y_min += cs[i] * x_min**i
+                y_max += cs[i] * x_max**i
 
-    print('RSS = {}'.format(total_residual(list_a, list_b, xs, ys)))
+            plt.plot([x_min, x_max], [y_min, y_max], 'r-')
+
+    # Print total residual
+    print('RSS = {}'.format(sum_res))
 
     # Show plotted line(s) if specified
     if plot:
         plt.show()
 
 
+# %% Define least squares solution
 def least_squares(xs, ys):
     """
     Calculates a and b
     (linear: y = a + b*x_i)
+    (quadratic: y = a + b*x_i + c*x_i^2)
+    etc...
 
     :param xs: ndarray of x values
     :param ys: ndarray of y values
-    :return: Matrix form A = [a, b]
+    :return: Matrix form A = [a, b, c, ...]
     """
     ones = np.ones(xs.shape)  # Extend the first column with 1s
-    x_e = np.column_stack((ones, xs))
-    v = np.linalg.inv(x_e.T.dot(x_e)).dot(x_e.T).dot(ys)
 
-    return v
+    # Linear
+    xs_l = np.column_stack((ones, xs))
+    l = np.linalg.inv(xs_l.T.dot(xs_l)).dot(xs_l.T).dot(ys)
+
+    # Quadratic
+    xs_q = np.column_stack((xs_l, xs**2))
+    q = np.linalg.inv(xs_q.T.dot(xs_q)).dot(xs_q.T).dot(ys)
+
+    # Dictionary (hash map) with residual as key and value as the matrix
+    dict = {residual(l, xs, ys): l,
+            residual(q, xs, ys): q}
+
+    # Get the min residual and its corresponding constants/coefficients
+    min_res = min(dict)
+    return dict.get(min_res), min_res
 
 
-def total_residual(list_a, list_b, list_xs, list_ys):
+# %% Define residual of 20 points
+def residual(cs, xs, ys):
     """
-    Calculate residual sum of squares
+    Calculate residual sum of squares of 20 data points
+    ∑_i (𝑦̂_i − y_i)^2 where 𝑦̂_i = a + b*x_i + c*x_i^2 + ...
 
-    :param list_a: y-intercepts
-    :param list_b: Slope gradients
-    :param list_xs: List of ndarrays of x values
-    :param list_ys: List of ndarrays of y values
+    :param cs: Constants/coefficients of polynomials
+    :param xs: ndarrays of x values
+    :param ys: ndarrays of y values
     :return: Total residual error (int)
     """
-    sum = 0
-    for i, a in enumerate(list_a):
-        # ∑_𝑖 (𝑦̂_𝑖 − 𝑦_𝑖)^2 where 𝑦̂_𝑖 = 𝑎 + 𝑏*𝑥_𝑖
-        sum += np.sum((list_ys[i] - (a + list_b[i] * list_xs[i])) ** 2)
+    # Calculated like:
+    # y_hat = a * xs^0 +
+    #         b * xs^1 +
+    #         ...
+    #         c * xs^n
+    y_hat = 0
+    for i in range(len(cs)):
+        y_hat += cs[i] * xs**i
 
-    return sum
+    return np.sum((ys - y_hat) ** 2)
 
 
 # %% Run main
-main("basic_3.csv", True)
+main("basic_1.csv", True)
