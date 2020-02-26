@@ -123,10 +123,10 @@ def total_residual(list_a, list_b, list_xs, list_ys):
     """
     Calculate residual sum of squares
 
-    :param a: y-intercept
-    :param b: Gradient of the slope
-    :param xs: ndarray of x values
-    :param ys: ndarray of y values
+    :param list_a: y-intercepts
+    :param list_b: Slope gradients
+    :param list_xs: List of ndarrays of x values
+    :param list_ys: List of ndarrays of y values
     :return: Total residual error (int)
     """
     sum = 0
