@@ -64,45 +64,41 @@ def load_points_from_file(filename):
 
 
 # %% Define viewing data
-def view_data_segments(xs, ys, plot):
+def view_data_segments(list_xs, list_ys, plot):
     """Visualises the input file with each segment plotted in a different colour.
     Args:
-        xs : List/array-like of x co-ordinates.
-        ys : List/array-like of y co-ordinates.
+        list_xs : List/array-like of x co-ordinates.
+        list_ys : List/array-like of y co-ordinates.
         plot : Boolean specifying whether user wants data plotted
     Returns:
         None
     """
     # Preparation
-    assert len(xs) == len(ys)
-    assert len(xs) % 20 == 0
-    len_data = len(xs)
+    assert len(list_xs) == len(list_ys)
+    assert len(list_xs) % 20 == 0
+    len_data = len(list_xs)
     num_segments = len_data // 20
     colour = np.concatenate([[i] * 20 for i in range(num_segments)])
     plt.set_cmap('Dark2')
-    plt.scatter(xs, ys, c=colour)
+    plt.scatter(list_xs, list_ys, c=colour)
 
     # Convert ndarray into list of ndarrays of 20 x-values
-    xs = np.split(xs, len(xs) / 20)
-    ys = np.split(ys, len(ys) / 20)
+    list_xs = np.split(list_xs, len(list_xs) / 20)
+    list_ys = np.split(list_ys, len(list_ys) / 20)
 
     # Get constants/coefficients and residuals
     sum_res = 0
-    for i, x in enumerate(xs):
-        cs, res = least_squares(x, ys[i])
-
+    for i, xs in enumerate(list_xs):
+        cs, res = least_squares(xs, list_ys[i])
         sum_res += res
 
         # Plot lines if specified
         if plot:
-            x_min, x_max = xs[i].min(), xs[i].max()
+            y_plot = 0
+            for j in range(len(cs)):
+                y_plot += cs[j] * xs**j
 
-            y_min, y_max = 0, 0
-            for i in range(len(cs)):
-                y_min += cs[i] * x_min**i
-                y_max += cs[i] * x_max**i
-
-            plt.plot([x_min, x_max], [y_min, y_max], 'r-')
+            plt.plot(xs, y_plot, 'r-')
 
     # Print total residual
     print('RSS = {}'.format(sum_res))
@@ -126,17 +122,22 @@ def least_squares(xs, ys):
     """
     ones = np.ones(xs.shape)  # Extend the first column with 1s
 
-    # Linear
-    xs_l = np.column_stack((ones, xs))
-    l = np.linalg.inv(xs_l.T.dot(xs_l)).dot(xs_l.T).dot(ys)
+    # 1st degree (Linear)
+    xs_1 = np.column_stack((ones, xs))
+    deg_1 = np.linalg.inv(xs_1.T.dot(xs_1)).dot(xs_1.T).dot(ys)
 
-    # Quadratic
-    xs_q = np.column_stack((xs_l, xs**2))
-    q = np.linalg.inv(xs_q.T.dot(xs_q)).dot(xs_q.T).dot(ys)
+    # 2nd degree (Quadratic)
+    xs_2 = np.column_stack((xs_1, xs**2))
+    deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys)
+
+    # 3rd degree (Cubic)
+    xs_3 = np.column_stack((xs_2, xs**3))
+    deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys)
 
     # Dictionary (hash map) with residual as key and value as the matrix
-    dict = {residual(l, xs, ys): l,
-            residual(q, xs, ys): q}
+    dict = {residual(deg_1, xs, ys): deg_1,
+            residual(deg_2, xs, ys): deg_2,
+            residual(deg_3, xs, ys): deg_3}
 
     # Get the min residual and its corresponding constants/coefficients
     min_res = min(dict)
@@ -167,4 +168,4 @@ def residual(cs, xs, ys):
 
 
 # %% Run main
-main("basic_1.csv", True)
+main("noise_3.csv", True)
