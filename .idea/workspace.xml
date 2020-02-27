@@ -46,7 +46,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -117,7 +117,14 @@
       <workItem from="1582733461333" duration="816000" />
       <workItem from="1582734414913" duration="233000" />
       <workItem from="1582734981758" duration="22194000" />
-      <workItem from="1582760309975" duration="1157000" />
+      <workItem from="1582760309975" duration="1884000" />
+      <workItem from="1582797978318" duration="1282000" />
+      <workItem from="1582805081808" duration="3447000" />
+      <workItem from="1582811033782" duration="1789000" />
+      <workItem from="1582813880623" duration="142000" />
+      <workItem from="1582816513932" duration="3846000" />
+      <workItem from="1582820538150" duration="159000" />
+      <workItem from="1582820736800" duration="1278000" />
     </task>
     <servers />
   </component>
@@ -169,22 +176,22 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="0" y="173" key="IDE.errors.dialog/0.0.1600.860@0.0.1600.860" timestamp="1582664231878" />
-    <state x="301" y="72" key="SettingsEditor" timestamp="1582665155483">
+    <state x="301" y="72" key="SettingsEditor" timestamp="1582814041436">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="301" y="72" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1582665155483" />
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1582760365121">
+    <state x="301" y="72" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1582814041436" />
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1582820787424">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1582760365121" />
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1582820787424" />
     <state x="182" y="28" key="new project wizard" timestamp="1582666599832">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="182" y="28" key="new project wizard/0.0.1600.860@0.0.1600.860" timestamp="1582666599832" />
-    <state x="456" y="195" key="run.anything.popup" timestamp="1582658563208">
+    <state x="456" y="195" key="run.anything.popup" timestamp="1582811451107">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="456" y="195" key="run.anything.popup/0.0.1600.860@0.0.1600.860" timestamp="1582658563208" />
+    <state x="456" y="195" key="run.anything.popup/0.0.1600.860@0.0.1600.860" timestamp="1582811451107" />
     <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1582670933311">
       <screen x="0" y="0" width="1600" height="860" />
     </state>

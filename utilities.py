@@ -89,14 +89,17 @@ def view_data_segments(list_xs, list_ys, plot):
     # Get constants/coefficients and residuals
     sum_res = 0
     for i, xs in enumerate(list_xs):
-        cs, res = least_squares(xs, list_ys[i])
+        cs, shape_type, res = least_squares_residual_type(xs, list_ys[i])
         sum_res += res
 
         # Plot lines if specified
         if plot:
             y_plot = 0
-            for j in range(len(cs)):
-                y_plot += cs[j] * xs**j
+            if shape_type == "sin":
+                y_plot = cs[0] + cs[1] * np.sin(xs)
+            else:
+                for j in range(len(cs)):
+                    y_plot += cs[j] * xs**j
 
             plt.plot(xs, y_plot, 'r-')
 
@@ -109,7 +112,7 @@ def view_data_segments(list_xs, list_ys, plot):
 
 
 # %% Define least squares solution
-def least_squares(xs, ys):
+def least_squares_residual_type(xs, ys):
     """
     Calculates a and b
     (linear: y = a + b*x_i)
@@ -134,18 +137,34 @@ def least_squares(xs, ys):
     xs_3 = np.column_stack((xs_2, xs**3))
     deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys)
 
+    # Sinusoidal
+    xs_sin = np.column_stack((ones, np.sin(xs)))
+    sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys)
+
     # Dictionary (hash map) with residual as key and value as the matrix
-    dict = {residual(deg_1, xs, ys): deg_1,
-            residual(deg_2, xs, ys): deg_2,
-            residual(deg_3, xs, ys): deg_3}
+    dict = {residual(deg_1, xs, ys, "poly"): (deg_1, "poly"),
+            residual(deg_2, xs, ys, "poly"): (deg_2, "poly"),
+            residual(deg_3, xs, ys, "poly"): (deg_3, "poly"),
+            residual(sin, xs, ys, "sin"): (sin, "sin")}
 
     # Get the min residual and its corresponding constants/coefficients
     min_res = min(dict)
-    return dict.get(min_res), min_res
+    cs, shape_type = dict.get(min_res)
+    return cs, shape_type, min_res
+
+
+# def poly(xs, ys, deg):
+#     ones = np.ones(xs.shape)  # Extend the first column with 1s
+#
+#     for i in range(deg):
+#         # Jacobian matrix
+#         J = np.column_stack((xs**i,))
+#         np.hstack((ones, xs))
+#     pass
 
 
 # %% Define residual of 20 points
-def residual(cs, xs, ys):
+def residual(cs, xs, ys, shape_type):
     """
     Calculate residual sum of squares of 20 data points
     ∑_i (𝑦̂_i − y_i)^2 where 𝑦̂_i = a + b*x_i + c*x_i^2 + ...
@@ -153,19 +172,26 @@ def residual(cs, xs, ys):
     :param cs: Constants/coefficients of polynomials
     :param xs: ndarrays of x values
     :param ys: ndarrays of y values
-    :return: Total residual error (int)
+    :return: Residual error (int)
     """
+    y_hat = 0
+
+    # Calculated like:
+    # y_hat = a + bsin(xs)
+    if shape_type == "sin":
+        y_hat = cs[0] + cs[1] * np.sin(xs)
+
     # Calculated like:
     # y_hat = a * xs^0 +
     #         b * xs^1 +
-    #         ...
-    #         c * xs^n
-    y_hat = 0
-    for i in range(len(cs)):
-        y_hat += cs[i] * xs**i
+    #
+    else:
+        for i in range(len(cs)):
+            y_hat += cs[i] * xs**i
 
     return np.sum((ys - y_hat) ** 2)
 
 
 # %% Run main
 main("noise_3.csv", True)
+
