@@ -5,50 +5,32 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-# %% Define main
-def main(f=None, plot=None):
-    """
-    Main function run when executing file
-    :param f: Filename of data file. If none inputted, assume
-              input comes from 2nd arg when executed.
-    :param plot: Boolean value to indicate if we should show
-                 plotted lines
-    :return: None
-    """
-    f_p = get_file(f)
-    if f_p is None:
-        sys.exit(0)
-
-    xs, ys = load_points_from_file(f_p)
-    view_data_segments(xs, ys, plot)
-
-
 # %% Define get file
-def get_file(f):
+def get_file_and_plot(f):
     """
     Checks if file specified when running in Python Console or
     when compiled
     :param f: Filename of data file. If none inputted, assume
               input comes from 2nd arg when executed.
-    :return: Path to file or None
+    :return: Path to file or None, and Boolean to show graph or not
     """
     if f:  # Check if file specified when calling main func
-        return "train_data/{}".format(f)
+        return "train_data/{}".format(f), True
 
     elif len(sys.argv) > 1:  # Check if file specified from user input
         if sys.argv[1] == "--mode=client":  # Check if run from Python Console
             print("ERROR: Please specify the file to get data from")
-            return None
+            return None, None
 
-        elif len(sys.argv) > 2:  # Check if user wants data plotted
+        if len(sys.argv) > 2:  # Check if user wants data plotted
             if sys.argv[2] == "--plot":
-                return "train_data/{}".format(sys.argv[1])
+                return "train_data/{}".format(sys.argv[1]), True
 
-        return "train_data/{}".format(sys.argv[1])
+        return "train_data/{}".format(sys.argv[1]), None
 
     else:  # Check if filename unspecified anywhere
         print("ERROR: Please specify the file to get data from")
-        return None
+        return None, None
 
 
 # %% Define loading points from file
@@ -153,16 +135,6 @@ def least_squares_residual_type(xs, ys):
     return cs, shape_type, min_res
 
 
-# def poly(xs, ys, deg):
-#     ones = np.ones(xs.shape)  # Extend the first column with 1s
-#
-#     for i in range(deg):
-#         # Jacobian matrix
-#         J = np.column_stack((xs**i,))
-#         np.hstack((ones, xs))
-#     pass
-
-
 # %% Define residual of 20 points
 def residual(cs, xs, ys, shape_type):
     """
@@ -172,6 +144,7 @@ def residual(cs, xs, ys, shape_type):
     :param cs: Constants/coefficients of polynomials
     :param xs: ndarrays of x values
     :param ys: ndarrays of y values
+    :param shape_type: String dictating what the equation type is
     :return: Residual error (int)
     """
     y_hat = 0
@@ -190,8 +163,3 @@ def residual(cs, xs, ys, shape_type):
             y_hat += cs[i] * xs**i
 
     return np.sum((ys - y_hat) ** 2)
-
-
-# %% Run main
-main("noise_3.csv", True)
-
