@@ -85,7 +85,7 @@ def view_data_segments(list_xs, list_ys, plot):
 
             plt.plot(xs, y_plot, 'r-')
 
-    # Print total residual
+    # Print residual sum of squares (RSS)
     print('RSS = {}'.format(sum_res))
 
     # Show plotted line(s) if specified
