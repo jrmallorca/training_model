@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="56018257-20a9-4b6e-af80-e8a01713f113" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Notes.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +40,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PublicArtTrailDB" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -128,6 +128,9 @@
       <workItem from="1582820736800" duration="1278000" />
       <workItem from="1583071838061" duration="1276000" />
       <workItem from="1583077189333" duration="1030000" />
+      <workItem from="1583518784343" duration="537000" />
+      <workItem from="1583519692740" duration="327000" />
+      <workItem from="1583782618358" duration="3539000" />
     </task>
     <servers />
   </component>
@@ -143,6 +146,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="643" y="320" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/0.0.1600.860@0.0.1600.860" timestamp="1582658809934" />
+    <state x="580" y="185" key="FileChooserDialogImpl" timestamp="1583520023635">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="580" y="185" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1583520023635" />
     <state width="1557" height="276" key="GridCell.Tab.0.bottom" timestamp="1582760157913">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -179,14 +186,14 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="0" y="173" key="IDE.errors.dialog/0.0.1600.860@0.0.1600.860" timestamp="1582664231878" />
-    <state x="301" y="72" key="SettingsEditor" timestamp="1582814041436">
+    <state x="301" y="72" key="SettingsEditor" timestamp="1583784812513">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="301" y="72" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1582814041436" />
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1583077497131">
+    <state x="301" y="72" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1583784812513" />
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1583519972386">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1583077497131" />
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1583519972386" />
     <state x="182" y="28" key="new project wizard" timestamp="1582666599832">
       <screen x="0" y="0" width="1600" height="860" />
     </state>

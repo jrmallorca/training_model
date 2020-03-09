@@ -111,9 +111,8 @@ def least_squares_residual_type(xs, ys):
     xs_1 = np.column_stack((ones, xs))
     deg_1 = np.linalg.inv(xs_1.T.dot(xs_1)).dot(xs_1.T).dot(ys)
 
-    # 2nd degree (Quadratic)
+    # 2nd degree (Quadratic) (Not evaluated)
     xs_2 = np.column_stack((xs_1, xs**2))
-    deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys)
 
     # 3rd degree (Cubic)
     xs_3 = np.column_stack((xs_2, xs**3))
@@ -124,14 +123,14 @@ def least_squares_residual_type(xs, ys):
     sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys)
 
     # Dictionary (hash map) with residual as key and value as the matrix
-    dict = {residual(deg_1, xs, ys, "poly"): (deg_1, "poly"),
-            residual(deg_2, xs, ys, "poly"): (deg_2, "poly"),
+    dict = {residual(deg_1, xs, ys, "lin"): (deg_1, "lin"),
             residual(deg_3, xs, ys, "poly"): (deg_3, "poly"),
             residual(sin, xs, ys, "sin"): (sin, "sin")}
 
     # Get the min residual and its corresponding constants/coefficients
     min_res = min(dict)
     cs, shape_type = dict.get(min_res)
+    print(shape_type)
     return cs, shape_type, min_res
 
 
@@ -157,7 +156,7 @@ def residual(cs, xs, ys, shape_type):
     # Calculated like:
     # y_hat = a * xs^0 +
     #         b * xs^1 +
-    #
+    #         ...
     else:
         for i in range(len(cs)):
             y_hat += cs[i] * xs**i
