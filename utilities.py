@@ -130,7 +130,6 @@ def least_squares_residual_type(xs, ys):
     # Get the min residual and its corresponding constants/coefficients
     min_res = min(dict)
     cs, shape_type = dict.get(min_res)
-    print(shape_type)
     return cs, shape_type, min_res
 
 
