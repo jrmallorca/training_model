@@ -20,4 +20,14 @@ def main(f=None):
 
 
 # %% Run main
-main()
+main("basic_1.csv")
+main("basic_2.csv")
+main("basic_3.csv")
+main("basic_4.csv")
+main("basic_5.csv")
+main("adv_1.csv")
+main("adv_2.csv")
+main("adv_3.csv")
+main("noise_1.csv")
+main("noise_2.csv")
+main("noise_3.csv")

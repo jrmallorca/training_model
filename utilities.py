@@ -15,7 +15,7 @@ def get_file_and_plot(f):
     :return: Path to file or None, and Boolean to show graph or not
     """
     if f:  # Check if file specified when calling main func
-        return "train_data/{}".format(f), True
+        return "train_data/{}".format(f), None
 
     elif len(sys.argv) > 1:  # Check if file specified from user input
         if sys.argv[1] == "--mode=client":  # Check if run from Python Console
@@ -113,6 +113,7 @@ def least_squares_residual_type(xs, ys):
 
     # 2nd degree (Quadratic) (Not evaluated)
     xs_2 = np.column_stack((xs_1, xs**2))
+    deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys)
 
     # 3rd degree (Cubic)
     xs_3 = np.column_stack((xs_2, xs**3))
@@ -124,7 +125,8 @@ def least_squares_residual_type(xs, ys):
 
     # Dictionary (hash map) with residual as key and value as the matrix
     dict = {residual(deg_1, xs, ys, "lin"): (deg_1, "lin"),
-            residual(deg_3, xs, ys, "poly"): (deg_3, "poly"),
+            residual(deg_2, xs, ys, "poly"): (deg_2, "poly"),
+            # residual(deg_3, xs, ys, "poly"): (deg_3, "poly"),
             residual(sin, xs, ys, "sin"): (sin, "sin")}
 
     # Get the min residual and its corresponding constants/coefficients
