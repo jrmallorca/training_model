@@ -113,11 +113,15 @@ def least_squares_residual_type(xs, ys):
 
     # 2nd degree (Quadratic) (Not evaluated)
     xs_2 = np.column_stack((xs_1, xs**2))
-    deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys)
+    # deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys)
 
     # 3rd degree (Cubic)
     xs_3 = np.column_stack((xs_2, xs**3))
     deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys)
+
+    # 4rd degree
+    xs_4 = np.column_stack((xs_3, xs**4))
+    # deg_4 = np.linalg.inv(xs_4.T.dot(xs_4)).dot(xs_4.T).dot(ys)
 
     # Sinusoidal
     xs_sin = np.column_stack((ones, np.sin(xs)))
@@ -125,13 +129,15 @@ def least_squares_residual_type(xs, ys):
 
     # Dictionary (hash map) with residual as key and value as the matrix
     dict = {residual(deg_1, xs, ys, "lin"): (deg_1, "lin"),
-            residual(deg_2, xs, ys, "poly"): (deg_2, "poly"),
-            # residual(deg_3, xs, ys, "poly"): (deg_3, "poly"),
+            # residual(deg_2, xs, ys, "poly"): (deg_2, "poly"),
+            residual(deg_3, xs, ys, "poly"): (deg_3, "poly"),
+            # residual(deg_4, xs, ys, "poly"): (deg_4, "poly"),
             residual(sin, xs, ys, "sin"): (sin, "sin")}
 
     # Get the min residual and its corresponding constants/coefficients
     min_res = min(dict)
     cs, shape_type = dict.get(min_res)
+    # print(shape_type)
     return cs, shape_type, min_res
 
 
@@ -139,7 +145,6 @@ def least_squares_residual_type(xs, ys):
 def residual(cs, xs, ys, shape_type):
     """
     Calculate residual sum of squares of 20 data points
-    ∑_i (𝑦̂_i − y_i)^2 where 𝑦̂_i = a + b*x_i + c*x_i^2 + ...
 
     :param cs: Constants/coefficients of polynomials
     :param xs: ndarrays of x values

@@ -1,0 +1,36 @@
+lin
+RSS = 1.6881623371729653e-28
+lin
+lin
+RSS = 6.214646211331131e-27
+poly
+RSS = 1.4384831613188792e-18
+lin
+poly
+RSS = 1.3851152714485016e-12
+sin
+RSS = 1.050131637030211e-25
+poly
+poly
+poly
+RSS = 198.232147123148
+sin
+poly
+sin
+RSS = 3.650864592182401
+poly
+poly
+sin
+poly
+sin
+poly
+RSS = 979.5922076723733
+poly
+RSS = 10.985055464509532
+poly
+poly
+RSS = 797.916656821281
+poly
+poly
+sin
+RSS = 477.69933811934675
