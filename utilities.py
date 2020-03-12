@@ -15,7 +15,7 @@ def get_file_and_plot(f):
     :return: Path to file or None, and Boolean to show graph or not
     """
     if f:  # Check if file specified when calling main func
-        return "train_data/{}".format(f), None
+        return "train_data/{}".format(f), True
 
     elif len(sys.argv) > 1:  # Check if file specified from user input
         if sys.argv[1] == "--mode=client":  # Check if run from Python Console
@@ -120,7 +120,7 @@ def least_squares_residual_type(xs, ys):
     deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys)
 
     # 4rd degree
-    xs_4 = np.column_stack((xs_3, xs**4))
+    # xs_4 = np.column_stack((xs_3, xs**4))
     # deg_4 = np.linalg.inv(xs_4.T.dot(xs_4)).dot(xs_4.T).dot(ys)
 
     # Sinusoidal

@@ -1,0 +1,167 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[total={6in, 9in}]{geometry}
+\usepackage[font=small,labelfont=bf,skip=2pt]{caption} % example skip set to 2pt
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{amsmath}
+
+\sisetup{
+	round-mode = places,
+	round-precision = 2,
+}
+
+\begin{document}
+
+\title{Reconstructing Signals via Least Squares Error Modelling}
+\author{Jonquil Isys R. Mallorca}
+\date{\today}
+\maketitle
+
+\section{Introduction}
+The Least Squares Method (LSM) is a standard procedure in regression analysis to approximate a solution for a set of coordinates. It involves minimising the residual sum of squares (RSS) of every coordinate to find the best fitting line.
+\\ \\
+We will use LSM with the data given to train our model and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
+
+\section{Explanation of the model}
+The model reads in a number of data segments from a file. It finds the function type of each data segment in a file by employing the LSM and retrieving the function type with the least Sum of Squares Error (SSE). The SSE of each line segment is then summed up to form the RSS.
+\\ \\
+We will now review regression techniques used for polynomial and sinusoidal regressions.
+
+	\subsection{Linear \& Polynomial Regression}
+	\label{lin_poly}
+	Polynomial, and thus linear, regressions can be acquired through the general LSM in matrix form. A degree 3 (cubic) polynomial has been chosen for the polynomial function (we discuss why in subsection \ref{compare}).
+	\\ \\
+	We input the vector column of y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
+	%
+	\begin{equation*}
+	y_{(N\times1)} = 
+		\begin{bmatrix}
+		y_1 \\ 
+		\vdots \\
+		y_N
+		\end{bmatrix} \;
+	X_{(N\times(p + 1))} = 
+		\begin{bmatrix}
+		1 & x_1^1 & \cdots & x_1^p \\ 
+		\vdots & \vdots & \ddots & \vdots \\
+		1 & x_N^1 & \cdots & x_N^p
+		\end{bmatrix}
+	\end{equation*}
+	%
+	where
+	%
+	\begin{equation*}
+	p = 
+		\begin{cases}
+	      1, & \text{if polynomial is linear} \\
+	      3, & \text{otherwise}
+	    	\end{cases}
+	\end{equation*}
+	%
+	Using the input, we compute the coefficient vector $A = (X^tX)^{-1}X^ty$, and regression line $\hat{y}$, where $\hat{y}_i = a_0 + a_1x_i + a_2x_i^2 + \cdots + a_px_i^p$ and each $a_i$ are components of $A$.
+	
+	\subsection{Sinusoidal Regression}
+	Through an observation of select data points in certain files, namely basic\_5.csv, adv\_3.csv and noise\_3.csv, the unknown function was deduced to be sinusoidal in nature.
+	\\ \\
+	Using similar steps in subsection \ref{lin_poly}, We input the y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
+	%
+	\begin{equation*}
+	y_{(N\times1)} = 
+		\begin{bmatrix}
+		y_1 \\ 
+		\vdots \\
+		y_N
+		\end{bmatrix} \;
+	X_{(N\times2)} = 
+		\begin{bmatrix}
+		1 & sin(x_1) \\
+		\vdots & \vdots \\
+		1 & sin(x_N)
+		\end{bmatrix}
+	\end{equation*}
+	%
+	Using the input, we compute the coefficient vector $A = (X^tX)^{-1}X^ty$, and regression line $\hat{y}$, where $\hat{y}_i = a_0 + a_1sin(x_i)$ and each $a_i$ are components of $A$.
+
+\section{Results}
+	\subsection{Results from chosen regression functions}
+	As demonstrated in Table \ref{tab:rss}, the RSS in the basic files are extremely small and the sequence of functions used for each file is expected when comparing the line and points plotted by eye. This indicates that the lines plotted are accurate without overfitting.
+	\\ \\
+	However in non-basic files, we see higher values of RSS and more disagreeable sequences of function types of each line segment compared to their respective set of data points. 
+
+	\begin{table}[ht]
+	\scriptsize\centering
+	\caption{\label{tab:rss} RSS and sequence of function types for the line segments of each file}
+		\begin{tabularx}{\textwidth}[t]{X X X}
+		\toprule
+		\textbf{File} & \textbf{RSS} & \textbf{Regression functions used}\\ \midrule
+		basic\textunderscore1 & \num{1.6881623371729653e-28} & Linear \\
+		basic\textunderscore2 & \num{6.214646211331131e-27} & Linear, Linear \\
+		basic\textunderscore3 & \num{1.4384831613188792e-18} & Cubic \\
+		basic\textunderscore4 & \num{1.3851152714485016e-12} & Linear, Cubic \\
+		basic\textunderscore5 & \num{1.050131637030211e-25} & Sine \\
+		adv\textunderscore1 & \num{198.232147123148} & Cubic, Cubic, Cubic \\
+		adv\textunderscore2 & \num{3.650864592182401} & Sine, Cubic, Sine \\
+		adv\textunderscore3 & \num{979.5922076723733} & Cubic, Cubic, Sine, Cubic, Sine, Cubic \\
+		noise\textunderscore1 & \num{10.985055464509532} & Cubic \\
+		noise\textunderscore2 & \num{797.916656821281} & Cubic, Cubic \\
+		noise\textunderscore3 & \num{477.69933811934675} & Cubic, Cubic, Sine \\ \bottomrule
+		\end{tabularx}
+	\end{table}
+	%
+	\begin{figure}[ht]
+		\begin{minipage}[c]{0.36\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth, valign=t]{../figs/adv1.png}
+		\caption{Graph of adv\_1.csv}
+		\label{fig:adv_1}
+		\end{minipage}
+		%
+		\begin{minipage}[c]{0.64\linewidth}
+		As shown on Figure \ref{fig:adv_1}, the first and last line segment function types are agreeable; however, the second line segment is arguably expected to be linear. While the SSE of the cubic function is lower than its linear counterpart, and the line plotted almost follows a linear function, we risk overfitting the data. \\
+
+		This behaviour occurs in all non-basic files, typically in data segments that visibly look linear in nature.
+		\end{minipage}
+	\end{figure}
+
+	\subsection{\label{compare} Comparison to other possible function types}
+	The reasons why a cubic polynomial was preferred compared to other potential polynomials are displayed in Table \ref{tab:compare}. When $p = 2$, most files have either the same or higher RSS than when $p = 3$, indicating that choosing $p = 2$ would lead to underfitting and unnecessary inaccuracy. In comparison, when $p = 4$, certain files have lower RSS than when $p = 2$; however, other files have gained a large increase in RSS, most notably adv\_3.csv.
+	%
+	\begin{table}[ht]
+	\scriptsize\centering
+	\caption{\label{tab:compare} Comparison of RSS when degree of polynomial $p = 2, 3, 4$}
+		\begin{tabularx}{\textwidth}[t]{X X X X}
+		\toprule
+		\textbf{File} & \textbf{RSS ($p = 2$)} & \textbf{RSS ($p = 3$)} & \textbf{RSS ($p = 4$)}\\ \midrule
+		basic\textunderscore1 & \num{1.6881623371729653e-28} & \num{1.6881623371729653e-28} & \num{1.6881623371729653e-28} \\
+		basic\textunderscore2 & \num{6.214646211331131e-27} & \num{6.214646211331131e-27} & \num{6.214646211331131e-27} \\
+		basic\textunderscore3 & \num{15.743318683748834} & \num{1.4384831613188792e-18} & \num{2.6012776884995257e-12} \\
+		basic\textunderscore4 & \num{0.007268669045563463} & \num{1.3851152714485016e-12} & \num{4.785094044379873e-05} \\
+		basic\textunderscore5 & \num{1.050131637030211e-25} & \num{1.050131637030211e-25} & \num{1.050131637030211e-25} \\
+		adv\textunderscore1 & \num{218.59789456025604} & \num{198.232147123148} & \num{243.21351343708486} \\
+		adv\textunderscore2 & \num{3.6526012736506934} & \num{3.650864592182401} & \num{3.3971499558768428} \\
+		adv\textunderscore3 & \num{986.5825880671808} & \num{979.5922076723733} & \num{91487.02857541112} \\
+		noise\textunderscore1 & \num{11.849676414507696} & \num{10.985055464509532} & \num{10.537383349558016} \\
+		noise\textunderscore2 & \num{809.236461180993} & \num{797.916656821281} & \num{727.2007630749505} \\
+		noise\textunderscore3 & \num{482.21440019537704} & \num{477.69933811934675} & \num{440.8685821656794} \\ \bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	\noindent
+	In the last data segment of Figure \ref{fig:adv_3}, the model chose to use a linear function type to fit the data as it had the lowest SSE when $p = 4$. It is clear that using $p = 4$ or higher values of p would only lead to experiencing undesired consequences caused by overfitting and a risk of choosing highly inappropriate functions to fit the data.
+	%
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.5\linewidth, valign=t]{../figs/adv3.png}
+		\caption{Graph of adv\_3.csv when $p = 4$}
+		\label{fig:adv_3}
+	\end{figure}
+	%
+\section{Conclusion}
+Using linear, cubic and sinusoidal functions as the three primary ways of discerning the regression line of every data segment is sufficient in generalising the data with minimal risk of overfitting/underfitting, with respect to the training data given. 
+\\ \\
+As a future improvement, we could use regularisation with cross-validation to further the accuracy of our model.
+
+\end{document}

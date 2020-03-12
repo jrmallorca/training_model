@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56018257-20a9-4b6e-af80-e8a01713f113" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +47,11 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\JONQUIL\IdeaProjects\sps_cw\Report" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -130,7 +135,15 @@
       <workItem from="1583518784343" duration="537000" />
       <workItem from="1583519692740" duration="327000" />
       <workItem from="1583782618358" duration="5180000" />
-      <workItem from="1583839921327" duration="10844000" />
+      <workItem from="1583839921327" duration="18012000" />
+      <workItem from="1583926418268" duration="796000" />
+      <workItem from="1583927415125" duration="2067000" />
+      <workItem from="1583932142331" duration="595000" />
+      <workItem from="1583933306710" duration="146000" />
+      <workItem from="1583938031467" duration="4486000" />
+      <workItem from="1583957959272" duration="230000" />
+      <workItem from="1583958349753" duration="638000" />
+      <workItem from="1584537452384" duration="263000" />
     </task>
     <servers />
   </component>
@@ -190,10 +203,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="301" y="72" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1583784812513" />
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1583841131112">
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1584537728140">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1583841131112" />
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1584537728140" />
     <state x="1009" y="347" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583863370620">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
