@@ -74,6 +74,7 @@ def view_data_segments(list_xs, list_ys, plot):
     for i, xs in enumerate(list_xs):
         cs, res, y_hat, shape_type = least_squares_residual_type(xs, list_ys[i])
         print(shape_type)
+        print()
         sum_res += res
 
         # Plot lines if specified
@@ -107,7 +108,7 @@ def least_squares_residual_type(xs, ys):
 
     # K-fold validation attributes
     k = 5
-    kf = KFold(k)
+    kf = KFold(k, True)
     mean_cve = np.zeros(3)  # Array of cross validation errors
 
     for train_index, test_index in kf.split(xs):
@@ -129,10 +130,13 @@ def least_squares_residual_type(xs, ys):
         xs_sin = np.column_stack((ones, np.sin(xs_train)))  # Sinusoidal
         cs_train_sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys_train)  # Constants/Coefficients
         mean_cve[2] += residual(cs_train_sin, xs_test, ys_test, sin)  # Cross validation error
+        print(mean_cve[2])
 
     # Calculate mean of all sum of cves
     for i in range(3):
         mean_cve[i] /= k
+
+    print(mean_cve)
 
     ones = np.ones(xs.shape)
 
