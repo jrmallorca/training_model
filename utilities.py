@@ -73,6 +73,7 @@ def view_data_segments(list_xs, list_ys, plot):
     sum_res = 0
     for i, xs in enumerate(list_xs):
         cs, res, y_hat, shape_type = least_squares_residual_type(xs, list_ys[i])
+        print(shape_type)
         sum_res += res
 
         # Plot lines if specified
@@ -106,7 +107,7 @@ def least_squares_residual_type(xs, ys):
 
     # K-fold validation attributes
     k = 5
-    kf = KFold(k, True)
+    kf = KFold(k)
     mean_cve = np.zeros(3)  # Array of cross validation errors
 
     for train_index, test_index in kf.split(xs):

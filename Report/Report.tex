@@ -23,10 +23,10 @@
 \section{Introduction}
 The Least Squares Method (LSM) is a standard procedure in regression analysis to approximate a solution for a set of coordinates. It involves minimising the residual sum of squares (RSS) of every coordinate to find the best fitting line.
 \\ \\
-We will use LSM with the data given to train our model and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
+We will use LSM with the data given to train our program and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
 
-\section{Explanation of the model}
-The model reads in a number of data segments from a file. It finds the function type of each data segment in a file by employing the LSM and retrieving the function type with the least Sum of Squares Error (SSE). The SSE of each line segment is then summed up to form the RSS.
+\section{Explanation of the program}
+The program reads in a number of data segments from a file. It finds the function type of each data segment in a file by employing the LSM and retrieving the function type with the least Sum of Squares Error (SSE). The SSE of each line segment is then summed up to form the RSS.
 \\ \\
 We will now review regression techniques used for polynomial and sinusoidal regressions.
 
@@ -150,7 +150,7 @@ We will now review regression techniques used for polynomial and sinusoidal regr
 	\end{table}
 	
 	\noindent
-	In the last data segment of Figure \ref{fig:adv_3}, the model chose to use a linear function type to fit the data as it had the lowest SSE when $p = 4$. It is clear that using $p = 4$ or higher values of p would only lead to experiencing undesired consequences caused by overfitting and a risk of choosing highly inappropriate functions to fit the data.
+	In the last data segment of Figure \ref{fig:adv_3}, the program chose to use a linear function type to fit the data as it had the lowest SSE when $p = 4$. It is clear that using $p = 4$ or higher values of p would only lead to experiencing undesired consequences caused by overfitting and a risk of choosing highly inappropriate functions to fit the data.
 	%
 	\begin{figure}[ht]
 		\centering
@@ -162,6 +162,6 @@ We will now review regression techniques used for polynomial and sinusoidal regr
 \section{Conclusion}
 Using linear, cubic and sinusoidal functions as the three primary ways of discerning the regression line of every data segment is sufficient in generalising the data with minimal risk of overfitting/underfitting, with respect to the training data given. 
 \\ \\
-As a future improvement, we could use regularisation with cross-validation to further the accuracy of our model.
+As a future improvement, we could use regularisation with cross-validation to further the accuracy of our program.
 
 \end{document}

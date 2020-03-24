@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56018257-20a9-4b6e-af80-e8a01713f113" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cw1_ok18847.py" beforeDir="false" afterPath="$PROJECT_DIR$/cw1_ok18847.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,11 +99,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.utilities" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -145,6 +140,8 @@
       <workItem from="1583957959272" duration="230000" />
       <workItem from="1583958349753" duration="638000" />
       <workItem from="1584537452384" duration="263000" />
+      <workItem from="1585074181459" duration="1273000" />
+      <workItem from="1585078679519" duration="213000" />
     </task>
     <servers />
   </component>
@@ -156,6 +153,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="254" y="85" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1582666418665" />
+    <state x="80" y="166" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1585072005693">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="80" y="166" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1600.860@0.0.1600.860" timestamp="1585072005693" />
     <state x="643" y="320" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog" timestamp="1582658809934">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -204,10 +205,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="301" y="72" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1583784812513" />
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1584537728140">
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1585078715802">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1584537728140" />
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1585078715802" />
     <state x="1009" y="347" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583863370620">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -224,8 +225,5 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1582670933311" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/sps_cw$utilities.coverage" NAME="utilities Coverage Results" MODIFIED="1582741224322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
