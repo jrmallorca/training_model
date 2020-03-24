@@ -72,19 +72,12 @@ def view_data_segments(list_xs, list_ys, plot):
     # Get constants/coefficients and residuals
     sum_res = 0
     for i, xs in enumerate(list_xs):
-        cs, shape_type, res = least_squares_residual_type(xs, list_ys[i])
+        cs, res, y_hat, shape_type = least_squares_residual_type(xs, list_ys[i])
         sum_res += res
 
         # Plot lines if specified
         if plot:
-            y_plot = 0
-            if shape_type == "sin":
-                y_plot = cs[0] + cs[1] * np.sin(xs)
-            else:
-                for j in range(len(cs)):
-                    y_plot += cs[j] * xs**j
-
-            plt.plot(xs, y_plot, 'r-')
+            plt.plot(xs, estimated_y(cs, xs, shape_type), 'r-')
 
     # Print residual sum of squares (RSS)
     print('RSS = {}'.format(sum_res))
@@ -106,43 +99,68 @@ def least_squares_residual_type(xs, ys):
     :param ys: List/array-like of y values
     :return: Matrix form A = [a, b, c, ...]
     """
-    ones = np.ones(xs.shape)  # Extend the first column with 1s
+    # Shape types
+    linear = "linear"
+    poly = "poly"
+    sin = "sin"
 
-    # 1st degree (Linear)
-    xs_1 = np.column_stack((ones, xs))
-    deg_1 = np.linalg.inv(xs_1.T.dot(xs_1)).dot(xs_1.T).dot(ys)
+    # K-fold validation attributes
+    k = 5
+    kf = KFold(k, True)
+    mean_cve = np.zeros(3)  # Array of cross validation errors
 
-    # 2nd degree (Quadratic) (Not evaluated)
-    xs_2 = np.column_stack((xs_1, xs**2))
-    # deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys)
+    for train_index, test_index in kf.split(xs):
+        xs_train, xs_test = xs[train_index], xs[test_index]
+        ys_train, ys_test = ys[train_index], ys[test_index]
 
-    # 3rd degree (Cubic)
-    xs_3 = np.column_stack((xs_2, xs**3))
-    deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys)
+        ones = np.ones(xs_train.shape)  # Extend the first column with 1s
 
-    # 4rd degree
-    # xs_4 = np.column_stack((xs_3, xs**4))
-    # deg_4 = np.linalg.inv(xs_4.T.dot(xs_4)).dot(xs_4.T).dot(ys)
+        xs_1 = np.column_stack((ones, xs_train))  # 1st degree (Linear)
+        cs_train_deg_1 = np.linalg.inv(xs_1.T.dot(xs_1)).dot(xs_1.T).dot(ys_train)  # Constants/Coefficients
+        mean_cve[0] += residual(cs_train_deg_1, xs_test, ys_test, linear)  # Cross validation error
 
-    # Sinusoidal
-    xs_sin = np.column_stack((ones, np.sin(xs)))
-    sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys)
+        xs_2 = np.column_stack((xs_1, xs_train ** 2))  # 2nd degree (Quadratic) (Not evaluated)
 
-    # Dictionary (hash map) with residual as key and value as the matrix
-    dict = {residual(deg_1, xs, ys, "lin"): (deg_1, "lin"),
-            # residual(deg_2, xs, ys, "poly"): (deg_2, "poly"),
-            residual(deg_3, xs, ys, "poly"): (deg_3, "poly"),
-            # residual(deg_4, xs, ys, "poly"): (deg_4, "poly"),
-            residual(sin, xs, ys, "sin"): (sin, "sin")}
+        xs_3 = np.column_stack((xs_2, xs_train ** 3))  # 3rd degree (Cubic)
+        cs_train_deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys_train)  # Constants/Coefficients
+        mean_cve[1] += residual(cs_train_deg_3, xs_test, ys_test, poly)  # Cross validation error
+
+        xs_sin = np.column_stack((ones, np.sin(xs_train)))  # Sinusoidal
+        cs_train_sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys_train)  # Constants/Coefficients
+        mean_cve[2] += residual(cs_train_sin, xs_test, ys_test, sin)  # Cross validation error
+
+    # Calculate mean of all sum of cves
+    for i in range(3):
+        mean_cve[i] /= k
+
+    ones = np.ones(xs.shape)
+
+    xs_1 = np.column_stack((ones, xs))  # 1st degree (Linear)
+    cs_deg_1 = np.linalg.inv(xs_1.T.dot(xs_1)).dot(xs_1.T).dot(ys)  # Constants/Coefficients
+
+    xs_2 = np.column_stack((xs_1, xs ** 2))  # 2nd degree (Quadratic) (Not evaluated)
+
+    xs_3 = np.column_stack((xs_2, xs ** 3))  # 3rd degree (Cubic)
+    cs_deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys)  # Constants/Coefficients
+
+    xs_sin = np.column_stack((ones, np.sin(xs)))  # Sinusoidal
+    cs_sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys)  # Constants/Coefficients
+
+    # Hashmap where
+    #   k = Cross validation error
+    #   v = Tuple of constants/coefficients, residual, estimated_y and shape_type for xs
+    dict = {
+        mean_cve[0]: (cs_deg_1, residual(cs_deg_1, xs, ys, linear), estimated_y(cs_deg_1, xs, linear), linear),
+        mean_cve[1]: (cs_deg_3, residual(cs_deg_3, xs, ys, poly), estimated_y(cs_deg_3, xs, poly), poly),
+        mean_cve[2]: (cs_sin, residual(cs_sin, xs, ys, sin), estimated_y(cs_sin, xs, sin), sin)
+    }
 
     # Get the min residual and its corresponding constants/coefficients
-    min_res = min(dict)
-    cs, shape_type = dict.get(min_res)
-    # print(shape_type)
-    return cs, shape_type, min_res
+    min_cve = min(dict)
+    return dict.get(min_cve)
 
 
-# %% Define residual of 20 points
+# %% Define residual
 def residual(cs, xs, ys, shape_type):
     """
     Calculate residual sum of squares of 20 data points
@@ -152,6 +170,20 @@ def residual(cs, xs, ys, shape_type):
     :param ys: List/array-like of y values
     :param shape_type: String dictating what the equation type is
     :return: Residual error (int)
+    """
+
+    return np.sum((ys - estimated_y(cs, xs, shape_type)) ** 2)
+
+
+# %% Define estimated y values (y_hat)
+def estimated_y(cs, xs, shape_type):
+    """
+    Calculate estimated y values to plot
+
+    :param cs: Constants/coefficients of polynomials
+    :param xs: List/array-like of x values
+    :param shape_type: String dictating what the equation type is
+    :return: List/array-like of estimated y values
     """
     y_hat = 0
 
@@ -166,6 +198,6 @@ def residual(cs, xs, ys, shape_type):
     #         ...
     else:
         for i in range(len(cs)):
-            y_hat += cs[i] * xs**i
+            y_hat += cs[i] * xs ** i
 
-    return np.sum((ys - y_hat) ** 2)
+    return y_hat
