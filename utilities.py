@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+from sklearn.model_selection import KFold
 
 
 # %% Define get file
@@ -24,9 +25,9 @@ def get_file_and_plot(f):
 
         if len(sys.argv) > 2:  # Check if user wants data plotted
             if sys.argv[2] == "--plot":
-                return "train_data/{}".format(sys.argv[1]), True
+                return sys.argv[1], True
 
-        return "train_data/{}".format(sys.argv[1]), None
+        return sys.argv[1], None
 
     else:  # Check if filename unspecified anywhere
         print("ERROR: Please specify the file to get data from")
@@ -65,8 +66,8 @@ def view_data_segments(list_xs, list_ys, plot):
     plt.scatter(list_xs, list_ys, c=colour)
 
     # Convert ndarray into list of ndarrays of 20 x-values
-    list_xs = np.split(list_xs, len(list_xs) / 20)
-    list_ys = np.split(list_ys, len(list_ys) / 20)
+    list_xs = np.split(list_xs, num_segments)
+    list_ys = np.split(list_ys, num_segments)
 
     # Get constants/coefficients and residuals
     sum_res = 0
@@ -101,8 +102,8 @@ def least_squares_residual_type(xs, ys):
     (quadratic: y = a + b*x_i + c*x_i^2)
     etc...
 
-    :param xs: ndarray of x values
-    :param ys: ndarray of y values
+    :param xs: List/array-like of x values
+    :param ys: List/array-like of y values
     :return: Matrix form A = [a, b, c, ...]
     """
     ones = np.ones(xs.shape)  # Extend the first column with 1s
@@ -147,8 +148,8 @@ def residual(cs, xs, ys, shape_type):
     Calculate residual sum of squares of 20 data points
 
     :param cs: Constants/coefficients of polynomials
-    :param xs: ndarrays of x values
-    :param ys: ndarrays of y values
+    :param xs: List/array-like of x values
+    :param ys: List/array-like of y values
     :param shape_type: String dictating what the equation type is
     :return: Residual error (int)
     """
