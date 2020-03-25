@@ -127,7 +127,7 @@ def least_squares_residual_type(xs, ys):
     #   v = Tuple of constants/coefficients, residual, estimated_y and shape_type for xs
     hashmap = {
         mean_cve[0]: (cs_deg_1, residual(cs_deg_1, xs, ys, linear), estimated_y(cs_deg_1, xs, linear), linear),
-        mean_cve[1]: (cs_deg_2, residual(cs_deg_2, xs, ys, poly), estimated_y(cs_deg_2, xs, poly), poly),
+        mean_cve[1]: (cs_deg_4, residual(cs_deg_4, xs, ys, poly), estimated_y(cs_deg_4, xs, poly), poly),
         mean_cve[2]: (cs_sin, residual(cs_sin, xs, ys, sin), estimated_y(cs_sin, xs, sin), sin)
     }
 
@@ -163,7 +163,7 @@ def kfold_cross_val(k, xs, ys):
 
         # Cross validation error
         mean_cve[0] += residual(cs_train_deg_1, xs_test, ys_test, linear)
-        mean_cve[1] += residual(cs_train_deg_2, xs_test, ys_test, poly)
+        mean_cve[1] += residual(cs_train_deg_4, xs_test, ys_test, poly)
         mean_cve[2] += residual(cs_train_sin, xs_test, ys_test, sin)
 
     # Calculate mean of all sum of cves

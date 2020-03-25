@@ -1,36 +1,36 @@
-lin
+linear
 RSS = 1.6881623371729653e-28
-lin
-lin
+linear
+linear
 RSS = 6.214646211331131e-27
 poly
 RSS = 15.743318683748834
-lin
+linear
 poly
 RSS = 0.007268669045563463
 sin
 RSS = 1.050131637030211e-25
 poly
+linear
 poly
-poly
-RSS = 218.59789456025604
+RSS = 218.8551440323649
 sin
-poly
+linear
 sin
-RSS = 3.6526012736506934
-poly
-poly
-sin
+RSS = 3.685132050447601
+linear
 poly
 sin
+linear
+sin
 poly
-RSS = 986.5825880671808
+RSS = 1014.409779528759
+linear
+RSS = 12.207460140137117
+linear
 poly
-RSS = 11.849676414507696
-poly
-poly
-RSS = 809.236461180993
-poly
+RSS = 850.9013645733803
+linear
 poly
 sin
-RSS = 482.21440019537704
+RSS = 483.0638008489782
