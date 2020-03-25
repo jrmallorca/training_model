@@ -23,18 +23,18 @@
 \section{Introduction}
 The Least Squares Method (LSM) is a standard procedure in regression analysis to approximate a solution for a set of coordinates. It involves minimising the residual sum of squares (RSS) of every coordinate to find the best fitting line.
 \\ \\
-We will use LSM with the data given to train our program and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
+Cross-validation (CV) is a resampling procedure that splits a set of points into training points and test points, trains our model using the training points and checks the cross-validation error (CVE) with the test points. The variation we will use is k-Fold Cross-Validation which repeats the process stated k times and gets the function type with the lowest mean cross-validation error.
+\\ \\
+We will use LSM and k-fold cross-validation with the data given to train our model and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
 
 \section{Explanation of the program}
-The program reads in a number of data segments from a file. It finds the function type of each data segment in a file by employing the LSM and retrieving the function type with the least Sum of Squares Error (SSE). The SSE of each line segment is then summed up to form the RSS.
+The program reads in multiple segments of points from a file\footnote{Note that utilities.py is not used as the functions related to it have been copied over to the main file and modified.}. Through LSM and CV, we find the function type that appropriately fits the segment, alongside its sum of squares error (SSE). The SSE of each segment is then summed up to form the RSS.
 \\ \\
-We will now review regression techniques used for polynomial and sinusoidal regressions.
+The model has three equations of a line to choose from: linear (degree 1), cubic (degree 3) and sinusoidal (we discuss these selections in subsection \ref{compare}).
 
 	\subsection{Linear \& Polynomial Regression}
 	\label{lin_poly}
-	Polynomial, and thus linear, regressions can be acquired through the general LSM in matrix form. A degree 3 (cubic) polynomial has been chosen for the polynomial function (we discuss why in subsection \ref{compare}).
-	\\ \\
-	We input the vector column of y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
+	Polynomial, and thus linear, regressions can be acquired through the general LSM in matrix form. We input the vector column of y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
 	%
 	\begin{equation*}
 	y_{(N\times1)} = 
@@ -57,15 +57,13 @@ We will now review regression techniques used for polynomial and sinusoidal regr
 	p = 
 		\begin{cases}
 	      1, & \text{if polynomial is linear} \\
-	      3, & \text{otherwise}
+	      3, & \text{if polynomial is cubic}
 	    	\end{cases}
 	\end{equation*}
 	%
 	Using the input, we compute the coefficient vector $A = (X^tX)^{-1}X^ty$, and regression line $\hat{y}$, where $\hat{y}_i = a_0 + a_1x_i + a_2x_i^2 + \cdots + a_px_i^p$ and each $a_i$ are components of $A$.
 	
 	\subsection{Sinusoidal Regression}
-	Through an observation of select data points in certain files, namely basic\_5.csv, adv\_3.csv and noise\_3.csv, the unknown function was deduced to be sinusoidal in nature.
-	\\ \\
 	Using similar steps in subsection \ref{lin_poly}, We input the y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
 	%
 	\begin{equation*}
@@ -163,5 +161,4 @@ We will now review regression techniques used for polynomial and sinusoidal regr
 Using linear, cubic and sinusoidal functions as the three primary ways of discerning the regression line of every data segment is sufficient in generalising the data with minimal risk of overfitting/underfitting, with respect to the training data given. 
 \\ \\
 As a future improvement, we could use regularisation with cross-validation to further the accuracy of our program.
-
 \end{document}

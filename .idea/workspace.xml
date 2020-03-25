@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="56018257-20a9-4b6e-af80-e8a01713f113" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cw1_ok18847.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Report/Report.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.aux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Report/Report.log" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Report/Report.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.synctex.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Report/Report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cw1_ok18847.py" beforeDir="false" afterPath="$PROJECT_DIR$/cw1_ok18847.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +157,7 @@
       <workItem from="1585079371935" duration="364000" />
       <workItem from="1585079971248" duration="1811000" />
       <workItem from="1585141643274" duration="3308000" />
-      <workItem from="1585145110955" duration="397000" />
+      <workItem from="1585145110955" duration="2894000" />
     </task>
     <servers />
   </component>

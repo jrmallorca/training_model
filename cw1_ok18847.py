@@ -112,11 +112,14 @@ def least_squares_residual_type(xs, ys):
     xs_1 = np.column_stack((ones, xs))  # 1st degree (Linear)
     xs_2 = np.column_stack((xs_1, xs ** 2))  # 2nd degree (Quadratic) (Not evaluated)
     xs_3 = np.column_stack((xs_2, xs ** 3))  # 3rd degree (Cubic)
+    xs_4 = np.column_stack((xs_3, xs ** 4))  # 4th degree (Not evaluated)
     xs_sin = np.column_stack((ones, np.sin(xs)))  # Sinusoidal
 
     # Constants/Coefficients
     cs_deg_1 = np.linalg.inv(xs_1.T.dot(xs_1)).dot(xs_1.T).dot(ys)
+    cs_deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys)
     cs_deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys)
+    cs_deg_4 = np.linalg.inv(xs_4.T.dot(xs_4)).dot(xs_4.T).dot(ys)
     cs_sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys)
 
     # Hashmap where
@@ -124,7 +127,7 @@ def least_squares_residual_type(xs, ys):
     #   v = Tuple of constants/coefficients, residual, estimated_y and shape_type for xs
     hashmap = {
         mean_cve[0]: (cs_deg_1, residual(cs_deg_1, xs, ys, linear), estimated_y(cs_deg_1, xs, linear), linear),
-        mean_cve[1]: (cs_deg_3, residual(cs_deg_3, xs, ys, poly), estimated_y(cs_deg_3, xs, poly), poly),
+        mean_cve[1]: (cs_deg_2, residual(cs_deg_2, xs, ys, poly), estimated_y(cs_deg_2, xs, poly), poly),
         mean_cve[2]: (cs_sin, residual(cs_sin, xs, ys, sin), estimated_y(cs_sin, xs, sin), sin)
     }
 
@@ -148,16 +151,19 @@ def kfold_cross_val(k, xs, ys):
         xs_1 = np.column_stack((ones, xs_train))  # 1st degree (Linear)
         xs_2 = np.column_stack((xs_1, xs_train ** 2))  # 2nd degree (Quadratic) (Not evaluated)
         xs_3 = np.column_stack((xs_2, xs_train ** 3))  # 3rd degree (Cubic)
+        xs_4 = np.column_stack((xs_3, xs_train ** 4))  # 4th degree (Not evaluated)
         xs_sin = np.column_stack((ones, np.sin(xs_train)))  # Sinusoidal
 
         # Constants/Coefficients
         cs_train_deg_1 = np.linalg.inv(xs_1.T.dot(xs_1)).dot(xs_1.T).dot(ys_train)
+        cs_train_deg_2 = np.linalg.inv(xs_2.T.dot(xs_2)).dot(xs_2.T).dot(ys_train)
         cs_train_deg_3 = np.linalg.inv(xs_3.T.dot(xs_3)).dot(xs_3.T).dot(ys_train)
+        cs_train_deg_4 = np.linalg.inv(xs_4.T.dot(xs_4)).dot(xs_4.T).dot(ys_train)
         cs_train_sin = np.linalg.inv(xs_sin.T.dot(xs_sin)).dot(xs_sin.T).dot(ys_train)
 
         # Cross validation error
         mean_cve[0] += residual(cs_train_deg_1, xs_test, ys_test, linear)
-        mean_cve[1] += residual(cs_train_deg_3, xs_test, ys_test, poly)
+        mean_cve[1] += residual(cs_train_deg_2, xs_test, ys_test, poly)
         mean_cve[2] += residual(cs_train_sin, xs_test, ys_test, sin)
 
     # Calculate mean of all sum of cves
@@ -228,4 +234,15 @@ def main(f=None):
 
 
 # %% Run main
-main()
+main("basic_1.csv")
+main("basic_2.csv")
+main("basic_3.csv")
+main("basic_4.csv")
+main("basic_5.csv")
+main("adv_1.csv")
+main("adv_2.csv")
+main("adv_3.csv")
+main("noise_1.csv")
+main("noise_2.csv")
+main("noise_3.csv")
+# main()
