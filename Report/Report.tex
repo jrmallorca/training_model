@@ -23,14 +23,14 @@
 \section{Introduction}
 The Least Squares Method (LSM) is a standard procedure in regression analysis to approximate a solution for a set of coordinates. It involves minimising the residual sum of squares (RSS) of every coordinate to find the best fitting line.
 \\ \\
-Cross-validation (CV) is a resampling procedure that splits a set of points, trains our model using the training points and checks the cross-validation error with the test points. The variation we will use is $k$-Fold Cross-Validation which repeats the process stated $k$ times and gets the function type with the lowest mean cross-validation error.
+Cross-validation (CV) is a resampling procedure that splits a set of points, trains our model using the training points and checks the cross-validation error (CVE) with the test points. The variation we will use is $k$-fold cross-validation which repeats the process stated $k$ times and gets the function type with the lowest mean cross-validation error.
 \\ \\
-We will use LSM and $k$-fold cross-validation with the data given to train our model and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
+We will use LSM and CV with the data given to train our model and observe the results. We expect our program to be able to pick a suitable model, based on the points plotted, with minimal RSS.
 
 \section{Explanation of the program}
-The program reads in multiple segments of points from a file\footnote{Note that utilities.py is not used as the functions related to it have been copied over to the main file and modified.}. Through LSM and CV, we find the function type that appropriately fits the segment, alongside its sum of squares error (SSE). The SSE of each segment is then summed up to form the RSS.
+The program reads in multiple segments of points from a file\footnote{Note that utilities.py is not used as the functions related to it have been copied over to the main file and modified.}. Through LSM and CV, it will find the function type that appropriately fits the segment, alongside its sum of squares error (SSE). The SSE of each segment is then summed up to form the RSS.
 \\ \\
-The model has three equations of a line to choose from: linear (degree 1), cubic (degree 3) and sinusoidal (we discuss these selections in subsection \ref{compare}).
+The model has three equations of a line to choose from: linear (degree 1), cubic (degree 3) and sinusoidal (we discuss these selections in Subsection \ref{compare}).
 
 	\subsection{Linear \& Polynomial Regression}
 	\label{lin_poly}
@@ -91,9 +91,9 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 	\scriptsize\centering
 	\caption{\label{tab:rss} RSS and sequence of function types for the line segments of each file}
 		\begin{tabular}[t]{
-			|p{\dimexpr.25\linewidth-2\tabcolsep-1.3333\arrayrulewidth}% column 1
-			|p{\dimexpr.25\linewidth-2\tabcolsep-1.3333\arrayrulewidth}% column 2
-			|p{\dimexpr.5\linewidth-2\tabcolsep-1.3333\arrayrulewidth}|% column 3
+			p{\dimexpr.25\linewidth-2\tabcolsep-1.3333\arrayrulewidth}% column 1
+			p{\dimexpr.25\linewidth-2\tabcolsep-1.3333\arrayrulewidth}% column 2
+			p{\dimexpr.5\linewidth-2\tabcolsep-1.3333\arrayrulewidth}% column 3
 		}
 		\toprule
 		\textbf{File} & \textbf{RSS} & \textbf{Regression functions used}\\ \midrule
@@ -110,24 +110,34 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 		noise\textunderscore3 & \num{482.9090507852767} & Linear, Cubic, Sine \\ \bottomrule
 		\end{tabular}
 	\end{table}
-	%
-	\begin{figure}[ht]
-		\begin{minipage}[c]{0.36\linewidth}
-		\centering
-		\includegraphics[width=1\linewidth, valign=t]{../figs/adv1.png}
-		\caption{Graph of adv\_1.csv}
-		\label{fig:adv_1}
-		\end{minipage}
-		%
-		\begin{minipage}[c]{0.64\linewidth}
-		As shown on Figure \ref{fig:adv_1}, the first and last line segment function types are agreeable; however, the second line segment is arguably expected to be linear. While the SSE of the cubic function is lower than its linear counterpart, and the line plotted almost follows a linear function, we risk overfitting the data. \\
+	
+	\noindent
+	However, cross-validation cannot completely eradicate overfitting. This is evidently shown on Table \ref{tab:diff_rss} and Table \ref{tab:diff_func}. It was discovered that the program was frequently alternating between linear and sine functions to model the first segment as the mean CVE would differ depending on how the test set was chosen. We can see in Figure \ref{fig:adv_3_normal} that the first segment is obviously linear.
 
-		This behaviour occurs in all non-basic files, typically in data segments that visibly look linear in nature.
-		\end{minipage}
-	\end{figure}
+	\begin{table}[ht]
+	\scriptsize\centering
+	\caption{\label{tab:diff_rss} Different RSS results for adv\_3}
+		\begin{tabularx}{\textwidth}[t]{X X X X}
+		\toprule
+		\textbf{File} & & RSS & \\
+		& (Optimal) & (Worse) & (Worst) \\ \midrule
+		adv\textunderscore3 & \num{1019.4370683681474} & \num{1017.6979899741879} & \num{1005.1147393985742} \\ \bottomrule
+		\end{tabularx}
+	\end{table}
+	%
+	\begin{table}[ht]
+	\scriptsize\centering
+	\caption{\label{tab:diff_func} Different regression functions used for adv\_3}
+		\begin{tabularx}{\textwidth}[t]{X X X X}
+		\toprule
+		\textbf{File} & & RSS & \\
+		& (Optimal) & (Worse) & (Worst) \\ \midrule
+		adv\textunderscore3 & Linear, Cubic, Sine, Linear, Sine, Cubic & Sine, Cubic, Sine, Linear, Sine, Cubic & Sine, Cubic, Sine, Cubic, Sine, Cubic \\ \bottomrule
+		\end{tabularx}
+	\end{table}
 
 	\subsection{\label{compare} Comparison to other possible function types}
-	The reasons why a cubic polynomial was preferred compared to other potential polynomials are displayed in Table \ref{tab:compare}. When $p = 2$, most files have either the same or higher RSS than when $p = 3$, indicating that choosing $p = 2$ would lead to underfitting and unnecessary inaccuracy. In comparison, when $p = 4$, certain files have lower RSS than when $p = 2$; however, other files have gained a large increase in RSS, most notably adv\_3.csv.
+	The reasons why a cubic polynomial was preferred compared to other potential polynomials are displayed in Table \ref{tab:compare}. When $p = 2$, most files had either the same or higher RSS than when $p = 3$, indicating underfitting. In comparison, when $p = 4$, certain files had lower RSS than when $p = 2$; however, other files gained a large increase in RSS, most notably adv\_3.csv.
 	%
 	\begin{table}[ht]
 	\scriptsize\centering
@@ -135,32 +145,32 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 		\begin{tabularx}{\textwidth}[t]{X X X X}
 		\toprule
 		\textbf{File} & \textbf{RSS ($p = 2$)} & \textbf{RSS ($p = 3$)} & \textbf{RSS ($p = 4$)}\\ \midrule
-		basic\textunderscore1 & \num{1.6881623371729653e-28} & \num{1.6881623371729653e-28} & \num{1.6881623371729653e-28} \\
-		basic\textunderscore2 & \num{6.214646211331131e-27} & \num{6.214646211331131e-27} & \num{6.214646211331131e-27} \\
 		basic\textunderscore3 & \num{15.743318683748834} & \num{1.4384831613188792e-18} & \num{2.6012776884995257e-12} \\
-		basic\textunderscore4 & \num{0.007268669045563463} & \num{1.3851152714485016e-12} & \num{4.785094044379873e-05} \\
-		basic\textunderscore5 & \num{1.050131637030211e-25} & \num{1.050131637030211e-25} & \num{1.050131637030211e-25} \\
-		adv\textunderscore1 & \num{218.59789456025604} & \num{198.232147123148} & \num{243.21351343708486} \\
-		adv\textunderscore2 & \num{3.6526012736506934} & \num{3.650864592182401} & \num{3.3971499558768428} \\
-		adv\textunderscore3 & \num{986.5825880671808} & \num{979.5922076723733} & \num{91487.02857541112} \\
-		noise\textunderscore1 & \num{11.849676414507696} & \num{10.985055464509532} & \num{10.537383349558016} \\
-		noise\textunderscore2 & \num{809.236461180993} & \num{797.916656821281} & \num{727.2007630749505} \\
-		noise\textunderscore3 & \num{482.21440019537704} & \num{477.69933811934675} & \num{440.8685821656794} \\ \bottomrule
+		adv\textunderscore3 & \num{1014.409779528759} & \num{1019.4370683681474} & \num{91521.01820439952} \\ \bottomrule
 		\end{tabularx}
 	\end{table}
 	
 	\noindent
-	In the last data segment of Figure \ref{fig:adv_3}, the program chose to use a linear function type to fit the data as it had the lowest SSE when $p = 4$. It is clear that using $p = 4$ or higher values of p would only lead to experiencing undesired consequences caused by overfitting and a risk of choosing highly inappropriate functions to fit the data.
+	In the last data segment of Figure \ref{fig:adv_3}, the program chose to use a linear function type to fit the data as it had the lowest CVE when $p = 4$. It is clear that using $p = 4$ or higher would lead to overfitting.
 	%
 	\begin{figure}[ht]
+		\begin{minipage}[c]{0.5\linewidth}
 		\centering
-		\includegraphics[width=0.5\linewidth, valign=t]{../figs/adv3.png}
+		\includegraphics[width=1\linewidth, valign=t]{../figs/adv3normal.png}
+		\caption{Graph of adv\_3.csv when $p = 3$}
+		\label{fig:adv_3_normal}
+		\end{minipage}
+		%
+		\begin{minipage}[c]{0.5\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth, valign=t]{../figs/adv3.png}
 		\caption{Graph of adv\_3.csv when $p = 4$}
 		\label{fig:adv_3}
+		\end{minipage}
 	\end{figure}
 	%
 \section{Conclusion}
-Using linear, cubic and sinusoidal functions as the three primary ways of discerning the regression line of every data segment is sufficient in generalising the data with minimal risk of overfitting/underfitting, with respect to the training data given. 
+Choosing linear, cubic and sinusoidal regressions, with CV, as the three primary ways of discerning the nature of every segment is sufficient in generalising the data while minimizing overfitting/underfitting, with respect to the training files given. 
 \\ \\
 As a future improvement, we could use regularisation with cross-validation to further the accuracy of our program.
 \end{document}

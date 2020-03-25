@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.10)  25 MAR 2020 17:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.10)  25 MAR 2020 19:03
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -478,61 +478,56 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--34
 [1
 
 {C:/Users/JONQUIL/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<../figs/adv1.png, id=17, 462.528pt x 345.4506pt>
-File: ../figs/adv1.png Graphic file (type png)
-<use ../figs/adv1.png>
-Package pdftex.def Info: ../figs/adv1.png  used on input line 117.
-(pdftex.def)             Requested size: 156.10345pt x 116.59245pt.
+[2]
+<../figs/adv3normal.png, id=23, 462.528pt x 345.4506pt>
+File: ../figs/adv3normal.png Graphic file (type png)
+<use ../figs/adv3normal.png>
+Package pdftex.def Info: ../figs/adv3normal.png  used on input line 159.
+(pdftex.def)             Requested size: 216.81pt x 161.92957pt.
+<../figs/adv3.png, id=25, 462.528pt x 345.4506pt>
+File: ../figs/adv3.png Graphic file (type png)
+<use ../figs/adv3.png>
+Package pdftex.def Info: ../figs/adv3.png  used on input line 166.
+(pdftex.def)             Requested size: 216.81pt x 161.92957pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
-
- []
-
-
-Overfull \hbox (2.43332pt too wide) in paragraph at lines 115--127
+Overfull \hbox (2.43333pt too wide) in paragraph at lines 157--170
 []$[]$ $[]$ 
  []
 
-[2 <../figs/adv1.png>]
-<../figs/adv3.png, id=26, 462.528pt x 345.4506pt>
-File: ../figs/adv3.png Graphic file (type png)
-<use ../figs/adv3.png>
-Package pdftex.def Info: ../figs/adv3.png  used on input line 157.
-(pdftex.def)             Requested size: 216.81pt x 161.92957pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 163--166
+Underfull \hbox (badness 10000) in paragraph at lines 173--176
 
  []
 
-[3 <../figs/adv3.png>] (Report.aux) ) 
+[3 <../figs/adv3normal.png> <../figs/adv3.png>] (Report.aux) ) 
 Here is how much of TeX's memory you used:
- 7774 strings out of 480934
- 159654 string characters out of 2898981
- 406963 words of memory out of 3000000
- 23531 multiletter control sequences out of 15000+200000
+ 7776 strings out of 480934
+ 159726 string characters out of 2898981
+ 398979 words of memory out of 3000000
+ 23533 multiletter control sequences out of 15000+200000
  544074 words of font info for 68 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,14n,77p,492b,589s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/JONQUIL/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/JONQUIL/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/JO
-NQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pf
-b><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmex10.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/JONQUIL/AppData/Local/P
-rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/JONQUIL/A
-ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/U
-sers/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mr17.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmr6.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/JONQUIL/AppData/Local
-/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/JONQUI
-L/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C
+ 41i,14n,77p,466b,593s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/JONQUIL
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C
 :/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmsy8.pfb>
-Output written on Report.pdf (3 pages, 215462 bytes).
+m/cmbx12.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmbx8.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/JONQUIL/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/JONQUIL/AppD
+ata/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/User
+s/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr1
+0.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmr12.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmr17.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/JONQUIL/AppData/Local/
+Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/JONQUIL/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Us
+ers/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+sy10.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmsy6.pfb><C:/Users/JONQUIL/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on Report.pdf (3 pages, 223111 bytes).
 PDF statistics:
  77 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
