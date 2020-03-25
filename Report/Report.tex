@@ -23,9 +23,9 @@
 \section{Introduction}
 The Least Squares Method (LSM) is a standard procedure in regression analysis to approximate a solution for a set of coordinates. It involves minimising the residual sum of squares (RSS) of every coordinate to find the best fitting line.
 \\ \\
-Cross-validation (CV) is a resampling procedure that splits a set of points into training points and test points, trains our model using the training points and checks the cross-validation error (CVE) with the test points. The variation we will use is k-Fold Cross-Validation which repeats the process stated k times and gets the function type with the lowest mean cross-validation error.
+Cross-validation (CV) is a resampling procedure that splits a set of points, trains our model using the training points and checks the cross-validation error with the test points. The variation we will use is $k$-Fold Cross-Validation which repeats the process stated $k$ times and gets the function type with the lowest mean cross-validation error.
 \\ \\
-We will use LSM and k-fold cross-validation with the data given to train our model and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
+We will use LSM and $k$-fold cross-validation with the data given to train our model and observe the results to determine if it approximates the solution for any file of data points with minimal RSS.
 
 \section{Explanation of the program}
 The program reads in multiple segments of points from a file\footnote{Note that utilities.py is not used as the functions related to it have been copied over to the main file and modified.}. Through LSM and CV, we find the function type that appropriately fits the segment, alongside its sum of squares error (SSE). The SSE of each segment is then summed up to form the RSS.
@@ -85,14 +85,16 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 
 \section{Results}
 	\subsection{Results from chosen regression functions}
-	As demonstrated in Table \ref{tab:rss}, the RSS in the basic files are extremely small and the sequence of functions used for each file is expected when comparing the line and points plotted by eye. This indicates that the lines plotted are accurate without overfitting.
-	\\ \\
-	However in non-basic files, we see higher values of RSS and more disagreeable sequences of function types of each line segment compared to their respective set of data points. 
+	As demonstrated in Table \ref{tab:rss}, the model picks agreeable functions for each file segment, even when noise is present. Thus, the model correctly prioritises on selecting the most appropriate function type with relatively low RSS.
 
 	\begin{table}[ht]
 	\scriptsize\centering
 	\caption{\label{tab:rss} RSS and sequence of function types for the line segments of each file}
-		\begin{tabularx}{\textwidth}[t]{X X X}
+		\begin{tabular}[t]{
+			|p{\dimexpr.25\linewidth-2\tabcolsep-1.3333\arrayrulewidth}% column 1
+			|p{\dimexpr.25\linewidth-2\tabcolsep-1.3333\arrayrulewidth}% column 2
+			|p{\dimexpr.5\linewidth-2\tabcolsep-1.3333\arrayrulewidth}|% column 3
+		}
 		\toprule
 		\textbf{File} & \textbf{RSS} & \textbf{Regression functions used}\\ \midrule
 		basic\textunderscore1 & \num{1.6881623371729653e-28} & Linear \\
@@ -100,13 +102,13 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 		basic\textunderscore3 & \num{1.4384831613188792e-18} & Cubic \\
 		basic\textunderscore4 & \num{1.3851152714485016e-12} & Linear, Cubic \\
 		basic\textunderscore5 & \num{1.050131637030211e-25} & Sine \\
-		adv\textunderscore1 & \num{198.232147123148} & Cubic, Cubic, Cubic \\
-		adv\textunderscore2 & \num{3.650864592182401} & Sine, Cubic, Sine \\
-		adv\textunderscore3 & \num{979.5922076723733} & Cubic, Cubic, Sine, Cubic, Sine, Cubic \\
-		noise\textunderscore1 & \num{10.985055464509532} & Cubic \\
-		noise\textunderscore2 & \num{797.916656821281} & Cubic, Cubic \\
-		noise\textunderscore3 & \num{477.69933811934675} & Cubic, Cubic, Sine \\ \bottomrule
-		\end{tabularx}
+		adv\textunderscore1 & \num{199.72560131252334} & Cubic, Linear, Cubic \\
+		adv\textunderscore2 & \num{3.685132050447601} & Sine, Linear, Sine \\
+		adv\textunderscore3 & \num{1019.4370683681474} & Linear, Cubic, Sine, Linear, Sine, Cubic \\
+		noise\textunderscore1 & \num{12.207460140137117} & Linear \\
+		noise\textunderscore2 & \num{849.5527462320404} & Linear, Cubic \\
+		noise\textunderscore3 & \num{482.9090507852767} & Linear, Cubic, Sine \\ \bottomrule
+		\end{tabular}
 	\end{table}
 	%
 	\begin{figure}[ht]
