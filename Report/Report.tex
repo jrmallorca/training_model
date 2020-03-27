@@ -23,9 +23,9 @@
 \section{Introduction}
 The Least Squares Method (LSM) is a standard procedure in regression analysis to approximate a solution for a set of coordinates. It involves minimising the residual sum of squares (RSS) of every coordinate to find the best fitting line.
 \\ \\
-Cross-validation (CV) is a resampling procedure that splits a set of points, trains our model using the training points and checks the cross-validation error (CVE) with the test points. The variation we will use is $k$-fold cross-validation which repeats the process stated $k$ times and gets the function type with the lowest mean cross-validation error.
+Cross-validation (CV) is a resampling procedure that splits a set of points, trains the model using the training points and checks the cross-validation error (CVE) with the test points. The variation used here is $k$-fold cross-validation which repeats the process stated $k$ times and retrieves the function type with the lowest mean cross-validation error.
 \\ \\
-We will use LSM and CV with the data given to train our model and observe the results. We expect our program to be able to pick a suitable model, based on the points plotted, with minimal RSS.
+LSM and CV will be used, with the data given, to train our model and observe the results. We expect the program to be able to pick a suitable model, based on the points plotted, with minimal RSS.
 
 \section{Explanation of the program}
 The program reads in multiple segments of points from a file\footnote{Note that utilities.py is not used as the functions related to it have been copied over to the main file and modified.}. Through LSM and CV, it will find the function type that appropriately fits the segment, alongside its sum of squares error (SSE). The SSE of each segment is then summed up to form the RSS.
@@ -34,7 +34,7 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 
 	\subsection{Linear \& Polynomial Regression}
 	\label{lin_poly}
-	Polynomial, and thus linear, regressions can be acquired through the general LSM in matrix form. We input the vector column of y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
+	Polynomial, and thus linear, regressions can be acquired through the general LSM in matrix form. The vector column of y-coordinates $y$ and the matrix $X$, where each row represents the variables of the terms in the equation of a polynomial, are inputted.
 	%
 	\begin{equation*}
 	y_{(N\times1)} = 
@@ -81,11 +81,11 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 		\end{bmatrix}
 	\end{equation*}
 	%
-	Using the input, we compute the coefficient vector $A = (X^tX)^{-1}X^ty$, and regression line $\hat{y}$, where $\hat{y}_i = a_0 + a_1sin(x_i)$ and each $a_i$ are components of $A$.
+	With the input, we calculate the coefficient vector $A = (X^tX)^{-1}X^ty$, and regression line $\hat{y}$, where $\hat{y}_i = a_0 + a_1sin(x_i)$ and each $a_i$ are components of $A$.
 
 \section{Results}
 	\subsection{Results from chosen regression functions}
-	As demonstrated in Table \ref{tab:rss}, the model picks agreeable functions for each file segment, even when noise is present. Thus, the model correctly prioritises on selecting the most appropriate function type with relatively low RSS.
+	As demonstrated in Table \ref{tab:rss}, the model chooses agreeable functions for each file segment, even when noise is present. Thus, the model correctly prioritises on selecting the most appropriate function type with relatively low RSS.
 
 	\begin{table}[ht]
 	\scriptsize\centering
@@ -112,7 +112,7 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 	\end{table}
 	
 	\noindent
-	However, cross-validation cannot completely eradicate overfitting. This is evidently shown on Table \ref{tab:diff_rss} and Table \ref{tab:diff_func}. It was discovered that the program was frequently alternating between linear and sine functions to model the first segment as the mean CVE would differ depending on how the test set was chosen. We can see in Figure \ref{fig:adv_3_normal} that the first segment is obviously linear.
+	However, cross-validation cannot completely eradicate overfitting. This is evidently shown on Table \ref{tab:diff_rss} and Table \ref{tab:diff_func}. It was discovered that the program was frequently alternating between linear and sine functions to model the first segment as the mean CVE would differ depending on how the test set was chosen. Figure \ref{fig:adv_3_normal} shows that the first segment is obviously linear.
 
 	\begin{table}[ht]
 	\scriptsize\centering
@@ -151,7 +151,7 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 	\end{table}
 	
 	\noindent
-	In the last data segment of Figure \ref{fig:adv_3}, the program chose to use a linear function type to fit the data as it had the lowest CVE when $p = 4$. It is clear that using $p = 4$ or higher would lead to overfitting.
+	In the last data segment of Figure \ref{fig:adv_3}, the program chose to use a linear function type to fit the data as it had the lowest CVE when $p = 4$. It is clear that using $p = 4$ or higher would lead to overfitting and errors.
 	%
 	\begin{figure}[ht]
 		\begin{minipage}[c]{0.5\linewidth}
@@ -172,5 +172,5 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 \section{Conclusion}
 Choosing linear, cubic and sinusoidal regressions, with CV, as the three primary ways of discerning the nature of every segment is sufficient in generalising the data while minimizing overfitting/underfitting, with respect to the training files given. 
 \\ \\
-As a future improvement, we could use regularisation with cross-validation to further the accuracy of our program.
+As a future improvement, regularisation could be used with cross-validation to further the accuracy of the program.
 \end{document}
