@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="56018257-20a9-4b6e-af80-e8a01713f113" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Report/Report.log" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Report/Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/cw_ok18847.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Report/Report.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.synctex.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Report/Report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Report/Report.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cw1_ok18847.py" beforeDir="false" afterPath="$PROJECT_DIR$/cw1_ok18847.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cw_ok18847.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +39,6 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -161,11 +158,15 @@
       <workItem from="1585155362870" duration="4405000" />
       <workItem from="1585230362463" duration="598000" />
       <workItem from="1585318335390" duration="792000" />
+      <workItem from="1589216487806" duration="63000" />
+      <workItem from="1589216571881" duration="711000" />
+      <workItem from="1589217375823" duration="438000" />
+      <workItem from="1589218732625" duration="399000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="254" y="85" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582666418665">

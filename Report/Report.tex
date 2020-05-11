@@ -25,7 +25,7 @@ The Least Squares Method (LSM) is a standard procedure in regression analysis to
 \\ \\
 Cross-validation (CV) is a resampling procedure that splits a set of points, trains the model using the training points and checks the cross-validation error (CVE) with the test points. The variation used here is $k$-fold cross-validation which repeats the process stated $k$ times and retrieves the function type with the lowest mean cross-validation error.
 \\ \\
-LSM and CV will be used, with the data given, to train our model and observe the results. We expect the program to be able to pick a suitable model, based on the points plotted, with minimal RSS.
+LSM and CV will be used, with the data given, to train our model and observe the results. We expect the program to be able to pick a suitable model based on the points plotted with minimal RSS.
 
 \section{Explanation of the program}
 The program reads in multiple segments of points from a file\footnote{Note that utilities.py is not used as the functions related to it have been copied over to the main file and modified.}. Through LSM and CV, it will find the function type that appropriately fits the segment, alongside its sum of squares error (SSE). The SSE of each segment is then summed up to form the RSS.
@@ -64,7 +64,7 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 	Using the input, we compute the coefficient vector $A = (X^tX)^{-1}X^ty$, and regression line $\hat{y}$, where $\hat{y}_i = a_0 + a_1x_i + a_2x_i^2 + \cdots + a_px_i^p$ and each $a_i$ are components of $A$.
 	
 	\subsection{Sinusoidal Regression}
-	Using similar steps in subsection \ref{lin_poly}, We input the y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
+	Using similar steps in Subsection \ref{lin_poly}, We input the y-coordinates $y$ from a file and a matrix $X$ where each row represents the variables of the terms in the equation of a polynomial.
 	%
 	\begin{equation*}
 	y_{(N\times1)} = 
@@ -112,7 +112,7 @@ The model has three equations of a line to choose from: linear (degree 1), cubic
 	\end{table}
 	
 	\noindent
-	However, cross-validation cannot completely eradicate overfitting. This is evidently shown on Table \ref{tab:diff_rss} and Table \ref{tab:diff_func}. It was discovered that the program was frequently alternating between linear and sine functions to model the first segment as the mean CVE would differ depending on how the test set was chosen. Figure \ref{fig:adv_3_normal} shows that the first segment is obviously linear.
+	However, cross-validation cannot completely eradicate overfitting. This is evidently shown on Table \ref{tab:diff_rss} and Table \ref{tab:diff_func}. It was discovered that the program was frequently alternating between linear and sine functions to model the first segment as the mean CVE would differ depending on how the test set was chosen. Figure \ref{fig:adv_3_normal} in Subsection \ref{compare} shows that the first segment is obviously linear.
 
 	\begin{table}[ht]
 	\scriptsize\centering
