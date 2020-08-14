@@ -78,7 +78,6 @@ def view_data_segments(list_xs, list_ys, plot):
     sum_res = 0
     for i, xs in enumerate(list_xs):
         cs, res, y_hat, shape_type = least_squares_residual_type(xs, list_ys[i])
-        print(shape_type)
         sum_res += res
 
         # Plot lines if specified
@@ -86,7 +85,7 @@ def view_data_segments(list_xs, list_ys, plot):
             plt.plot(xs, estimated_y(cs, xs, shape_type), 'r-')
 
     # Print residual sum of squares (RSS)
-    print('RSS = {}'.format(sum_res))
+    print(format(sum_res))
 
     # Show plotted line(s) if specified
     if plot:
