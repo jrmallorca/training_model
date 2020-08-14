@@ -138,7 +138,7 @@ def least_squares_residual_type(xs, ys):
 # %% Define K-fold cross validation
 def kfold_cross_val(k, xs, ys):
     # K-fold validation attributes
-    kf = KFold(k, True)
+    kf = KFold(k, shuffle=True)
     mean_cve = np.zeros(3)  # Array of cross validation errors
 
     # K-fold validation
