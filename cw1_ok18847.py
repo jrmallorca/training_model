@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
-from sklearn.model_selection import KFold
+import random
 
 # Shape types
 linear = "linear"
@@ -138,13 +138,23 @@ def least_squares_residual_type(xs, ys):
 # %% Define K-fold cross validation
 def kfold_cross_val(k, xs, ys):
     # K-fold validation attributes
-    kf = KFold(k, shuffle=True)
     mean_cve = np.zeros(3)  # Array of cross validation errors
 
+    indices = list(range(20)) # List of indices
+    random.shuffle(indices) # Shuffle list of indices
+
+    num_of_test_indices = 20 // k
+
     # K-fold validation
-    for train_index, test_index in kf.split(xs):
-        xs_train, xs_test = xs[train_index], xs[test_index]
-        ys_train, ys_test = ys[train_index], ys[test_index]
+    for i in range(k):
+        l_index = (i + 1) * num_of_test_indices # Last index
+        f_index = l_index - num_of_test_indices # First index
+
+        test_indices = indices[f_index:l_index]
+        train_indices = list(set(indices) - set(test_indices))
+
+        xs_test, xs_train = xs[test_indices], xs[train_indices]
+        ys_test, ys_train = ys[test_indices], ys[train_indices]
 
         ones = np.ones(xs_train.shape)  # Extend the first column with 1s
         xs_1 = np.column_stack((ones, xs_train))  # 1st degree (Linear)
